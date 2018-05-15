@@ -216,7 +216,7 @@ parameters:
   required: true
 - name: STRIMZI_VERSION
   description: The DockerHub tag for strimzi images
-  value: "0.3.1"
+  value: "0.4.0"
   required: true
 
 objects:
@@ -224,15 +224,15 @@ objects:
 - apiVersion: "v1"
   kind: "ImageStream"
   metadata:
-    name: "cluster-controller"
+    name: "cluster-operator"
   spec:
-    dockerImageRepository: "docker.io/strimzi/cluster-controller"
+    dockerImageRepository: "docker.io/strimzi/cluster-operator"
     lookupPolicy:
       local: true
     tags:
     - from:
         kind: DockerImage
-        name: docker.io/strimzi/cluster-controller:${STRIMZI_VERSION}
+        name: docker.io/strimzi/cluster-operator:${STRIMZI_VERSION}
       name: whisky
       referencePolicy:
         type: Local
@@ -1495,18 +1495,18 @@ objects:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: strimzi-cluster-controller
+    name: strimzi-cluster-operator
   spec:
     replicas: 1
     template:
       metadata:
         labels:
-          name: strimzi-cluster-controller
+          name: strimzi-cluster-operator
       spec:
         serviceAccountName: openwhisk
         containers:
-        - name: strimzi-cluster-controller
-          image: cluster-controller:whisky
+        - name: strimzi-cluster-operator
+          image: cluster-operator:whisky
           env:
           - name: STRIMZI_CONFIGMAP_LABELS
             value: "strimzi.io/kind=cluster"

@@ -9,7 +9,7 @@ cd $ROOTDIR
 
 # Logs from all the pods
 echo "### STRIMZI LOGS ###"
-oc logs $(oc get pods | grep strimzi-cluster-controller | awk '{print $1}')
+oc logs $(oc get pods | grep strimzi-cluster-operator | awk '{print $1}')
 echo ""
 echo ""
 echo "### ZOOKEEPER LOGS ###"
